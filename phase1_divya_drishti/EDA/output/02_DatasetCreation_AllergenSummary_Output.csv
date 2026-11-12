@@ -1,0 +1,8 @@
+﻿Allergen,Detected_Count,Review_Count,Not_Detected_Count,Unknown_Count,Total_Records,Detected_Pct,Review_Pct,Not_Detected_Pct,Unknown_Pct,Unresolved_Count,Unresolved_Pct
+Milk,4460,11,15529,0,20000,22.3,0.06,77.64,0.0,11,0.06
+Soy,782,288,18930,0,20000,3.91,1.44,94.65,0.0,288,1.44
+Sesame,469,0,19531,0,20000,2.34,0.0,97.66,0.0,0,0.0
+Wheat,340,4309,15351,0,20000,1.7,21.54,76.76,0.0,4309,21.54
+Tree Nuts,295,18,19687,0,20000,1.48,0.09,98.43,0.0,18,0.09
+Eggs,76,717,19207,0,20000,0.38,3.58,96.04,0.0,717,3.58
+Peanuts,19,0,19981,0,20000,0.1,0.0,99.9,0.0,0,0.0

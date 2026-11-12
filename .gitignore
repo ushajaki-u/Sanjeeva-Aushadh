@@ -1,0 +1,10 @@
+# Large raw openFDA bulk data — NOT committed (too big for GitHub; regenerate via download/refresh script)
+rawfdadata/
+phase1_divya_drishti/EDA/raw_data/
+
+# Python
+__pycache__/
+*.pyc
+
+# Transient run logs
+phase1_divya_drishti/EDA/output/_run_log.txt

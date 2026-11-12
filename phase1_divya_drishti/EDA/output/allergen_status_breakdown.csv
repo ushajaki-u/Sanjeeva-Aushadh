@@ -1,0 +1,29 @@
+﻿Allergen,Status,Count,Percentage,Total_Records
+Milk,Detected,4460,22.3,20000
+Milk,Review,11,0.06,20000
+Milk,Not Detected,15529,77.64,20000
+Milk,Unknown,0,0.0,20000
+Soy,Detected,782,3.91,20000
+Soy,Review,288,1.44,20000
+Soy,Not Detected,18930,94.65,20000
+Soy,Unknown,0,0.0,20000
+Sesame,Detected,469,2.34,20000
+Sesame,Review,0,0.0,20000
+Sesame,Not Detected,19531,97.66,20000
+Sesame,Unknown,0,0.0,20000
+Wheat,Detected,340,1.7,20000
+Wheat,Review,4309,21.54,20000
+Wheat,Not Detected,15351,76.76,20000
+Wheat,Unknown,0,0.0,20000
+Tree Nuts,Detected,295,1.48,20000
+Tree Nuts,Review,18,0.09,20000
+Tree Nuts,Not Detected,19687,98.43,20000
+Tree Nuts,Unknown,0,0.0,20000
+Eggs,Detected,76,0.38,20000
+Eggs,Review,717,3.58,20000
+Eggs,Not Detected,19207,96.04,20000
+Eggs,Unknown,0,0.0,20000
+Peanuts,Detected,19,0.1,20000
+Peanuts,Review,0,0.0,20000
+Peanuts,Not Detected,19981,99.9,20000
+Peanuts,Unknown,0,0.0,20000
