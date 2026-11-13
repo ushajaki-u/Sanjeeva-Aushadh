@@ -3,6 +3,10 @@ Milk,Detected,4460,22.3,20000
 Milk,Review,11,0.06,20000
 Milk,Not Detected,15529,77.64,20000
 Milk,Unknown,0,0.0,20000
+Alpha-Gal,Detected,2094,10.47,20000
+Alpha-Gal,Review,12496,62.48,20000
+Alpha-Gal,Not Detected,5410,27.05,20000
+Alpha-Gal,Unknown,0,0.0,20000
 Soy,Detected,782,3.91,20000
 Soy,Review,288,1.44,20000
 Soy,Not Detected,18930,94.65,20000

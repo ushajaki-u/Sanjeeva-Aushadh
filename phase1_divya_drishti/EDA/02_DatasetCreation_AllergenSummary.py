@@ -31,6 +31,7 @@ ALLERGEN_STATUS_COLUMNS = {
     "Tree Nuts": "tree_nuts_status",
     "Peanuts": "peanuts_status",
     "Soy": "soy_status",
+    "Alpha-Gal": "alpha_gal_status",
 }
 
 # Overall medication status follows the agreed priority.

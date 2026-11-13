@@ -111,7 +111,7 @@ ALLERGEN_RULES = {
         "direct_terms": [
             "wheat", "wheat flour", "wheat starch", "wheat gluten", "gluten",
             "semolina", "spelt", "kamut", "khorasan wheat", "triticale",
-            "durum", "farina", "bulgur", "seitan",
+            "durum", "farina", "bulgur", "seitan","cracked wheat", "wheat bran", "wheat germ", "wheat protein",
         ],
         "review_terms": ["flour", "starch", "dextrin", "maltodextrin"],
         "exclusions": ["rice flour", "corn flour", "maize flour", "oat flour",
@@ -156,6 +156,124 @@ ALLERGEN_RULES = {
         "review_terms": ["lecithin", "vegetable protein", "hydrolyzed vegetable protein"],
         "exclusions": ["egg lecithin", "sunflower lecithin", "rapeseed lecithin"],
     },
+    "Alpha_Gal": {
+        # Alpha-gal syndrome: reaction to mammalian (non-primate) material.
+        # Covers gelatin/collagen, mammalian meats/fats, and mammalian-derived drugs/biologics.
+        "direct_terms": [
+            # Gelatin & collagen (capsules, surgical, supplements)
+            "gelatin", "gelatine", "bovine gelatin", "porcine gelatin",
+            "kosher gelatin", "halal gelatin", "hydrolyzed gelatin",
+            "gelatin hydrolysate", "succinylated gelatin", "modified fluid gelatin",
+            "polygeline", "oxipolygelatin", "urea-linked gelatin",
+            "gelatin crosspolymer", "absorbable gelatin", "absorbable gelatin sponge",
+            "absorbable gelatin powder", "absorbable gelatin film",
+            "gelatin-thrombin matrix", "gelatin capsule", "gelatin capsules",
+            "hard gelatin capsule", "soft gelatin capsule", "softgel", "softgels",
+            "e441", "e-441", "9000-70-8",
+            "bovine collagen", "porcine collagen", "mammalian collagen",
+            "hydrolyzed bovine collagen", "hydrolyzed porcine collagen",
+            "bovine collagen peptides", "porcine collagen peptides",
+            "hydrolyzed animal protein", "animal protein hydrolysate",
+            "sodium lauryl hydrolyzed collagen", "potassium cocoyl hydrolyzed collagen",
+            "amp-isostearoyl hydrolyzed collagen",
+            "gelfoam", "surgifoam", "gelfilm", "floseal", "surgiflo",
+            "gelofusine", "haemaccel", "aspic",
+            # Mammalian meats, game & culinary extracts
+            "beef", "veal", "pork", "ham", "bacon", "prosciutto", "pancetta",
+            "pepperoni", "salami", "chorizo", "sausage", "hot dog", "bologna",
+            "lamb", "mutton", "goat", "chevon", "venison", "deer", "elk",
+            "bison", "buffalo", "boar", "wild boar", "rabbit", "hare",
+            "squirrel", "kangaroo", "horse", "red meat", "mammalian meat",
+            "organ meat", "offal", "liver", "kidney", "tripe", "sweetbreads",
+            "tongue", "oxtail", "marrow", "bone marrow",
+            "tallow", "beef tallow", "mutton tallow", "dripping", "beef dripping",
+            "lard", "pork lard", "leaf lard", "suet", "schmaltz", "fatback",
+            "salt pork", "pork fat", "beef fat", "lamb fat", "animal fat",
+            "animal shortening", "oleo", "oleostearin", "oleomargarine",
+            "beef extract", "beef broth", "beef stock", "beef bouillon",
+            "pork broth", "pork stock", "pork bouillon", "lamb stock",
+            "veal stock", "demi-glace", "meat extract", "meat broth",
+            "rennet", "animal rennet", "calf rennet", "pepsin", "porcine pepsin",
+            # Mammalian active drugs, biologics & topical bases
+            "heparin", "heparin sodium", "heparin calcium", "porcine heparin",
+            "bovine heparin", "unfractionated heparin", "enoxaparin", "lovenox",
+            "dalteparin", "fragmin", "tinzaparin",
+            "cetuximab", "erbitux",
+            "desiccated thyroid", "natural desiccated thyroid", "thyroid usp",
+            "armour thyroid", "np thyroid", "nature-throid", "wp thyroid",
+            "pancrelipase", "pancreatin", "creon", "zenpep", "pancreaze",
+            "pertzye", "viokace",
+            "poractant alfa", "curosurf", "beractant", "survanta", "calfactant", "infasurf",
+            "hyaluronidase", "amphadase", "hydase", "vitrase",
+            "thrombin", "bovine thrombin", "thrombin-jmi", "recothrom",
+            "antivenom", "antivenin", "crofab", "anavip",
+            "lanolin", "wool fat", "wool wax", "wool alcohol", "adeps lanae",
+            "animal cholesterol", "ovine cholesterol", "mammalian squalene",
+            "placenta extract", "bovine serum", "fetal bovine serum",
+            "bovine serum albumin",
+        ],
+        "review_terms": [
+            "collagen", "hydrolyzed collagen", "collagen hydrolysate",
+            "collagen peptides", "soluble collagen", "native collagen",
+            "atelocollagen", "type i collagen", "type ii collagen",
+            "type iii collagen", "type 1 collagen", "type 2 collagen",
+            "type 3 collagen", "hydrolyzed elastin", "elastin",
+            "bone broth", "bone broth protein", "bone marrow extract",
+            "cartilage extract", "isinglass", "glycine", "hydroxyproline",
+            "magnesium stearate", "stearic acid", "calcium stearate",
+            "zinc stearate", "sodium stearate", "sodium stearyl fumarate",
+            "glyceryl monostearate", "glyceryl distearate", "glyceryl tristearate",
+            "sorbitan monostearate", "peg stearate", "polyoxyl stearate",
+            "glycerin", "glycerine", "glycerol",
+            "polysorbate 80", "polysorbate 60", "polysorbate 40", "polysorbate 20",
+            "oleic acid", "palmitic acid", "myristic acid", "caprylic acid",
+            "fatty acids", "mono- and diglycerides", "monoglycerides", "diglycerides",
+            "cholesterol", "squalene", "lecithin", "taurine", "l-cysteine", "cysteine",
+            "vitamin d3", "cholecalciferol",
+            "lactose", "lactose monohydrate", "lactose anhydrous",
+            "anhydrous lactose", "spray-dried lactose", "spray dried lactose",
+            "capsule", "capsules", "beadlets", "microencapsulated",
+            "marshmallow", "marshmallows", "gummy", "gummies",
+            "confectioner's glaze", "confectioners glaze",
+            "natural flavor", "natural flavors", "natural flavoring",
+            "meat flavor", "savory flavor", "broth", "stock", "bouillon",
+            "shortening", "enzymes", "lipase", "amylase", "protease",
+        ],
+        "exclusions": [
+            "chicken", "turkey", "duck", "goose", "quail", "pheasant",
+            "ostrich", "emu", "poultry", "fowl", "bird", "avian",
+            "fish", "salmon", "tuna", "cod", "tilapia", "trout", "halibut",
+            "sardine", "anchovy", "shrimp", "prawn", "crab", "lobster",
+            "clam", "mussel", "oyster", "scallop", "squid", "calamari",
+            "octopus", "seafood", "shellfish", "crustacean", "mollusk",
+            "chicken broth", "chicken stock", "chicken bouillon",
+            "turkey broth", "turkey stock", "turkey bacon", "turkey sausage",
+            "chicken sausage", "duck fat", "goose fat",
+            "fish gelatin", "piscine gelatin", "marine gelatin",
+            "fish collagen", "marine collagen", "piscine collagen",
+            "hydrolyzed fish collagen", "hydrolyzed marine collagen",
+            "chicken collagen", "avian collagen", "eggshell membrane collagen",
+            "vegan gelatin", "vegetarian gelatin", "plant gelatin",
+            "agar", "agar-agar", "agar agar", "pectin", "carrageenan",
+            "hypromellose", "hpmc", "hydroxypropyl methylcellulose",
+            "pullulan", "modified cellulose", "vegetable cellulose",
+            "microcrystalline cellulose", "croscarmellose sodium",
+            "sodium starch glycolate", "povidone", "copovidone",
+            "polyethylene glycol", "peg", "vegetable glycerin",
+            "vegetable magnesium stearate", "vegetable stearic acid",
+            "vegan capsule", "vegetarian capsule", "veggie capsule",
+            "plant-based capsule", "konjac", "konjac gum", "xanthan gum",
+            "guar gum", "locust bean gum", "carob bean gum",
+            "acacia gum", "gum arabic", "vegetable shortening",
+            "plant-based", "vegan", "vegetarian", "beefsteak tomato",
+            "buffalo sauce", "buffalo wing", "buffalo wings",
+            "buffalo cauliflower", "butternut squash", "peanut", "walnut",
+            "chestnut", "hazelnut", "coconut", "almond", "soy", "tofu",
+            "tempeh", "seitan", "microbial rennet", "vegetable rennet",
+            "plant-derived squalane", "olive squalane", "sugarcane squalane",
+            "synthetic thrombin", "recombinant",
+        ],
+    },
 }
 
 STATUS_VALUES = ("Detected", "Review", "Not Detected", "Unknown")
@@ -189,19 +307,29 @@ def normalize_text(text):
     return re.sub(r"\s+", " ", text).strip()
 
 
-def term_pattern(term):
-    """Phrase-aware, case-insensitive pattern with flexible spaces/hyphens."""
+def _term_core(term):
+    """Inner regex for one phrase (flexible spaces/hyphens), WITHOUT word boundaries."""
     normalized = normalize_text(term)
     pieces = [re.escape(piece) for piece in re.split(r"[\s-]+", normalized) if piece]
-    return r"(?<!\w)" + r"[\s-]+".join(pieces) + r"(?!\w)"
+    return r"[\s-]+".join(pieces)
 
 
-def spans_for(text, phrases):
-    spans = []
-    for phrase in sorted(set(phrases), key=len, reverse=True):
-        for match in re.finditer(term_pattern(phrase), text, flags=re.IGNORECASE):
-            spans.append((match.start(), match.end(), phrase, match.group(0)))
-    return spans
+def _build_combined(terms):
+    """Compile ONE alternation regex for a whole term list (longest phrase first), or None.
+
+    Performance: instead of scanning the text once per term (hundreds of scans for
+    Alpha-Gal), we scan once with a single combined pattern compiled a single time.
+    """
+    cores = [c for c in (_term_core(t) for t in sorted(set(terms), key=len, reverse=True)) if c]
+    if not cores:
+        return None
+    return re.compile(r"(?<!\w)(?:" + "|".join(cores) + r")(?!\w)", flags=re.IGNORECASE)
+
+
+def _spans(text, compiled):
+    if compiled is None:
+        return []
+    return [(m.start(), m.end(), m.group(0), m.group(0)) for m in compiled.finditer(text)]
 
 
 def overlaps(span_a, span_b):
@@ -224,12 +352,23 @@ def approved_text_fields(record):
     return fields
 
 
-def match_allergen_in_field(field_text, rules):
+# Pre-compile every allergen's term lists ONCE (major speedup, especially Alpha-Gal).
+COMPILED_RULES = {
+    allergen: {
+        "direct": _build_combined(r.get("direct_terms", [])),
+        "review": _build_combined(r.get("review_terms", [])),
+        "exclusions": _build_combined(r.get("exclusions", [])),
+    }
+    for allergen, r in ALLERGEN_RULES.items()
+}
+
+
+def match_allergen_in_field(field_text, compiled):
     """Find valid direct/review matches after removing overlapping exclusions."""
     normalized = normalize_text(field_text)
-    exclusions = spans_for(normalized, rules.get("exclusions", []))
-    direct = spans_for(normalized, rules.get("direct_terms", []))
-    review = spans_for(normalized, rules.get("review_terms", []))
+    exclusions = _spans(normalized, compiled["exclusions"])
+    direct = _spans(normalized, compiled["direct"])
+    review = _spans(normalized, compiled["review"])
 
     valid_direct = [m for m in direct if not any(overlaps(m, e) for e in exclusions)]
     valid_review = [m for m in review if not any(overlaps(m, e) for e in exclusions)]
@@ -242,13 +381,13 @@ def scan_allergens(record):
     fields = approved_text_fields(record)
     results = {}
 
-    for allergen, rules in ALLERGEN_RULES.items():
+    for allergen, compiled in COMPILED_RULES.items():
         direct_evidence = []
         review_evidence = []
         excluded_evidence = []
 
         for field in fields:
-            direct, review, suppressed = match_allergen_in_field(field["text"], rules)
+            direct, review, suppressed = match_allergen_in_field(field["text"], compiled)
 
             for _, _, rule_term, actual_text in direct:
                 direct_evidence.append({
