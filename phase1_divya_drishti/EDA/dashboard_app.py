@@ -8,8 +8,10 @@ Phase-1 rule-based pipeline (01_DatasetCreation_4Status.py).
 """
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
 import streamlit as st
 
 DATA = Path(__file__).parent / "output" / "01_DatasetCreation_4Status_Output.csv"
@@ -121,6 +123,51 @@ for rlabel, rcol in ROUTES.items():
 heat = px.imshow(mat, x=list(ALLERGENS.keys()), y=ylabels, text_auto=True, aspect="auto",
                  color_continuous_scale="Reds", labels=dict(color="% Detected"))
 st.plotly_chart(heat, use_container_width=True)
+
+# ---- Chart D (NEW METHOD): sunburst route -> allergen · Chart E (NEW): waffle ----
+c4, c5 = st.columns(2)
+
+with c4:
+    st.subheader("Drill-down: route → allergen (sunburst)")
+    rows = []
+    for rlabel, rcol in ROUTES.items():
+        sub = fdf[fdf[rcol]]
+        for aname, acol in ALLERGENS.items():
+            cnt = int((sub[acol] == "Detected").sum())
+            if cnt > 0:
+                rows.append({"route": rlabel, "allergen": aname, "count": cnt})
+    if rows:
+        sb = pd.DataFrame(rows)
+        sun = px.sunburst(sb, path=["route", "allergen"], values="count", color="route")
+        sun.update_traces(textinfo="label+value")
+        st.plotly_chart(sun, use_container_width=True)
+    else:
+        st.info("No route-tagged detections in the current selection.")
+
+with c5:
+    st.subheader("Allergens per medication (waffle)")
+    n_det = sum((fdf[c] == "Detected").astype(int) for c in ALLERGENS.values())
+    order = ["0 (none)", "1", "2", "3 or more"]
+    bucket = n_det.apply(lambda n: order[0] if n == 0 else (order[1] if n == 1 else (order[2] if n == 2 else order[3])))
+    counts = bucket.value_counts().reindex(order, fill_value=0)
+    pct = counts / counts.sum() * 100
+    base = np.floor(pct).astype(int)
+    for i in np.argsort(-(pct - base).values)[: int(100 - base.sum())]:
+        base.iloc[i] += 1
+    wcolors = {"0 (none)": "#7fb069", "1": "#f4a259", "2": "#e4572e", "3 or more": "#9b2226"}
+    seq = [cat for cat in order for _ in range(int(base[cat]))]
+    waf = go.Figure(go.Scatter(
+        x=[i % 10 for i in range(len(seq))], y=[i // 10 for i in range(len(seq))], mode="markers",
+        marker=dict(size=22, symbol="square", color=[wcolors[c] for c in seq],
+                    line=dict(width=2, color="white")), text=seq, hoverinfo="text", showlegend=False))
+    for cat in order:
+        waf.add_trace(go.Scatter(x=[None], y=[None], mode="markers",
+            marker=dict(size=11, symbol="square", color=wcolors[cat]),
+            name=f"{cat}: {int(counts[cat]):,}"))
+    waf.update_layout(xaxis=dict(visible=False), yaxis=dict(visible=False, scaleanchor="x"),
+                      plot_bgcolor="white", height=430, margin=dict(t=10),
+                      legend=dict(orientation="h", y=-0.08))
+    st.plotly_chart(waf, use_container_width=True)
 
 st.caption("⚠️ Educational prototype. A 'Detected' tag is not a safety guarantee; always verify the "
            "physical product and consult a clinician. Rule-based detection over openFDA label text.")
