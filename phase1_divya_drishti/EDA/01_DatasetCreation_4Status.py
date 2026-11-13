@@ -342,6 +342,61 @@ def first_text(record, *keys):
     return ""
 
 
+ROUTE_SEPARATOR = re.compile(r"\s*\|\s*")
+
+# Route grouping (approved by the clinician/PM):
+#  - ORAL, SUBLINGUAL, BUCCAL are all "in the mouth" -> oral
+#  - TRANSDERMAL (skin patch) -> topical
+#  - injectable also catches any "INTRA..." route so new intra-* routes in the full
+#    250K dataset are classified correctly without editing this list.
+# A drug can have several routes, so these are independent Yes/No flags (a drug can be
+# oral AND injectable). "is_other_route" = a known route not in any named bucket
+# (e.g. OPHTHALMIC, OTIC, DENTAL, RECTAL, VAGINAL). Record count stays one row per drug.
+ROUTE_ORAL = {"ORAL", "SUBLINGUAL", "BUCCAL"}
+ROUTE_TOPICAL = {"TOPICAL", "CUTANEOUS", "TRANSDERMAL", "PERCUTANEOUS"}
+ROUTE_INHALED = {"RESPIRATORY (INHALATION)", "NASAL"}
+ROUTE_INJECTABLE = {
+    "INTRAVENOUS", "INTRAMUSCULAR", "SUBCUTANEOUS", "INTRA-ARTICULAR", "INTRA-ARTERIAL",
+    "INTRATHECAL", "EPIDURAL", "INTRAVASCULAR", "INTRAVITREAL", "INTRALESIONAL",
+    "INFILTRATION", "PERINEURAL", "INTRACAVERNOUS", "INTRACAVITARY", "INTRAVESICAL",
+    "INTRAMEDULLARY", "INTRAUTERINE", "ENDOTRACHEAL", "INTRAPLEURAL", "SUBCONJUNCTIVAL",
+    "SOFT TISSUE", "PARENTERAL", "INTRACAUDAL", "EXTRACORPOREAL",
+}
+
+
+def _is_injectable(route):
+    return route in ROUTE_INJECTABLE or route.startswith("INTRA")
+
+
+def clean_route(route_value):
+    """Clean the multi-valued 'route' field into a normalized string + route-group flags.
+
+    openFDA stores route as a list we join with ' | ' (e.g. 'DENTAL | ORAL | TOPICAL').
+    Returns a dict: route_clean (normalized string), has_route (bool), and independent
+    Yes/No flags is_oral / is_injectable / is_topical / is_inhaled / is_other_route.
+    """
+    text = to_text(route_value)
+    if not text:
+        return {"route_clean": "", "has_route": False, "is_oral": False,
+                "is_injectable": False, "is_topical": False, "is_inhaled": False,
+                "is_other_route": False}
+    routes = sorted({p.strip().upper() for p in ROUTE_SEPARATOR.split(text) if p.strip()})
+
+    def bucketed(r):
+        return (r in ROUTE_ORAL or _is_injectable(r)
+                or r in ROUTE_TOPICAL or r in ROUTE_INHALED)
+
+    return {
+        "route_clean": " | ".join(routes),
+        "has_route": True,
+        "is_oral": any(r in ROUTE_ORAL for r in routes),
+        "is_injectable": any(_is_injectable(r) for r in routes),
+        "is_topical": any(r in ROUTE_TOPICAL for r in routes),
+        "is_inhaled": any(r in ROUTE_INHALED for r in routes),
+        "is_other_route": any(not bucketed(r) for r in routes),
+    }
+
+
 def process_drug_file(input_file, output_file=DEFAULT_OUTPUT_FILE):
     """Validate one FDA JSON file, create Dataset 1, and validate its CSV output."""
     input_path = Path(input_file)
@@ -367,6 +422,7 @@ def process_drug_file(input_file, output_file=DEFAULT_OUTPUT_FILE):
     for record_number, record in enumerate(records, start=1):
         openfda = record.get("openfda", {}) or {}
         allergen_results, searchable_fields = scan_allergens(record)
+        route_info = clean_route(openfda.get("route"))
 
         row = {
             "record_number": record_number,
@@ -378,6 +434,13 @@ def process_drug_file(input_file, output_file=DEFAULT_OUTPUT_FILE):
             "product_ndc": to_text(openfda.get("product_ndc")),
             "product_type": to_text(openfda.get("product_type")),
             "route": to_text(openfda.get("route")),
+            "route_clean": route_info["route_clean"],
+            "has_route": route_info["has_route"],
+            "is_oral": route_info["is_oral"],
+            "is_injectable": route_info["is_injectable"],
+            "is_topical": route_info["is_topical"],
+            "is_inhaled": route_info["is_inhaled"],
+            "is_other_route": route_info["is_other_route"],
             "substance_name": to_text(openfda.get("substance_name")),
             "active_ingredient": to_text(record.get("active_ingredient")),
             "active_ingredient_table": to_text(record.get("active_ingredient_table")),
