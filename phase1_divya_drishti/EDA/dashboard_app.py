@@ -6,8 +6,8 @@ The page tells the whole story, top to bottom:
   (1) Scope of the problem - STATIC overview (pie, bar-by-allergen, waffle)
   (2) Explore by allergen  - INTERACTIVE: pick an allergen in the sidebar and the
       metrics, route signature, worst offenders and why-review all reconfigure.
-  (3) Additional views     - STATIC sunburst (the new-to-course method) + heatmap,
-      kept at the very bottom.
+  (3) Additional views     - sunburst (the new-to-course method, driven by the
+      allergen pick) + a static heatmap, kept at the very bottom.
 
 App shell: Streamlit.  Charts: Plotly (the new-to-me library).
 Data: openFDA Drug Label (one 20,000-med shard), allergen-tagged by the Phase-1
@@ -33,7 +33,7 @@ ROUTES = {
     "oral": "is_oral", "injectable": "is_injectable", "topical": "is_topical",
     "inhaled/nasal": "is_inhaled", "other-local": "is_other_route",
 }
-STATUS_COLORS = {"Detected": "#c1121f", "Review": "#f3722c", "Not Detected": "#7fb069"}
+STATUS_COLORS = {"Detected": "#c1121f", "Review": "#f3722c", "Not Detected": "#7fb069", "Unknown": "#b0a89f"}
 DETECTED, REVIEW, MUTED = "#c1121f", "#f3722c", "#d9c9c0"
 WAFFLE_COLORS = {"0 (none)": "#7fb069", "1": "#f4a259", "2": "#e4572e", "3 or more": "#9b2226"}
 
@@ -205,23 +205,33 @@ st.markdown("---")
 # ============================================================
 st.header("③ Additional views")
 
-st.subheader("☀️ Sunburst — route → allergen")
-st.caption("A new-to-course method: nested rings you can click to drill (route → the allergens inside it). "
-           "Kept to satisfy the assignment's 'new method' requirement.")
+st.subheader(f"☀️ Sunburst — {allergen} status across routes")
+st.caption("New-to-course method, driven by your sidebar allergen pick. "
+           f"Center = {allergen}; middle ring = the 5 route buckets (sized by how many "
+           "medications take that route); outer ring = all 4 statuses "
+           "(Detected / Review / Not Detected / Unknown). "
+           "Click a wedge to drill in, click the center to zoom back out. "
+           "A medication can take more than one route, so route counts overlap.")
 sb_rows = []
 for rlabel, rcol in ROUTES.items():
     sub = df[df[rcol]]
-    for aname, acol in ALLERGENS.items():
-        cnt = int((sub[f"{acol}_status"] == "Detected").sum())
+    for status in ("Detected", "Review", "Not Detected", "Unknown"):
+        cnt = int((sub[f"{stem}_status"] == status).sum())
         if cnt > 0:
-            sb_rows.append({"route": rlabel, "allergen": aname, "count": cnt})
+            sb_rows.append({"lens": allergen, "route": rlabel, "status": status, "count": cnt})
 if sb_rows:
-    sun = px.sunburst(pd.DataFrame(sb_rows), path=["route", "allergen"], values="count", color="route")
-    sun.update_traces(textinfo="label+value")
-    sun.update_layout(margin=dict(t=10, b=10), height=500)
+    sun = px.sunburst(
+        pd.DataFrame(sb_rows), path=["lens", "route", "status"], values="count",
+        color="status", color_discrete_map=STATUS_COLORS,
+    )
+    sun.update_traces(
+        textinfo="label+value", insidetextorientation="radial",
+        hovertemplate="<b>%{label}</b><br>%{value} medications<br>%{percentParent} of parent<extra></extra>",
+    )
+    sun.update_layout(margin=dict(t=10, b=10, l=10, r=10), height=520)
     st.plotly_chart(sun, use_container_width=True)
 else:
-    st.info("No route-tagged detections to chart.")
+    st.info(f"No route-tagged {allergen} detections to chart.")
 
 st.subheader("Heatmap — allergen prevalence within each route")
 st.caption("Kept for completeness.")
