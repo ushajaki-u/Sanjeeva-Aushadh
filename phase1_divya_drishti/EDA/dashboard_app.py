@@ -1,5 +1,5 @@
 """
-Divya Drishti - Food Allergens in U.S. Medications
+Food Allergens in U.S. Medications - Initial exploratory dashboard
 SIADS 521 - interactive dashboard.
 
 The page tells the whole story, top to bottom:
@@ -79,9 +79,17 @@ st.sidebar.caption("Data: openFDA Drug Label (public domain), one 20,000-med sha
                    "Educational prototype - not medical advice.")
 stem = ALLERGENS[allergen]
 
-st.title("💊 Divya Drishti - Food Allergens in U.S. Medications")
-st.caption("How widespread are food allergens across 20,000 FDA medications - and where do they hide? "
-           "SIADS 521 · data: openFDA Drug Label · benchmark: Reker et al., Sci Transl Med 2019.")
+st.title("💊 Sanjeevani Aushad")
+st.subheader("Phase 1 - Divya Drishti")
+st.caption("Food Allergens in U.S. Medications")
+
+import streamlit as st
+
+st.caption(
+    "How widespread are food allergens in medications - and where do they hide?  \n"
+    "Data: [openFDA Downloads](https://open.fda.gov/data/downloads/)  \n"
+    "Inspired by: [PMC Study (PMC7122736)](https://pmc.ncbi.nlm.nih.gov/articles/PMC7122736/)"
+)
 
 # ============================================================
 # PART 1 - SCOPE OF THE PROBLEM  (static, all 20,000 meds)
@@ -250,4 +258,4 @@ st.plotly_chart(heat, use_container_width=True)
 st.markdown("---")
 st.caption("⚠️ Educational prototype. A 'Detected' tag is not a safety guarantee; always verify the "
            "physical product and consult a clinician. Rule-based detection over openFDA label text. "
-           "Benchmark: Reker et al., Sci Transl Med 2019.")
+           )

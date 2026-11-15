@@ -128,7 +128,7 @@ ALLERGEN_RULES = {
     },
     "Tree nuts": {
         "direct_terms": [
-            "tree nut", "tree nuts", "almond", "brazil nut", "cashew", "chestnut",
+            "tree nut", "tree nuts", "almond", "brazil nut", "cashew", 
             "hazelnut", "filbert", "hickory nut", "macadamia", "pecan", "pistachio",
             "walnut", "beechnut", "butternut", "pine nut", "pignoli", "praline",
             "marzipan", "nut meal", "nut flour", "nut oil",
@@ -136,7 +136,7 @@ ALLERGEN_RULES = {
         "review_terms": ["nuts", "nut"],
         "exclusions": [
             "coconut", "coconut oil", "coconut milk", "coconut butter", "nutmeg",
-            "water chestnut", "peanut", "peanuts", "areca nut", "betel nut",
+            "water chestnut", "horse chestnut", "chestnut","peanut", "peanuts", "areca nut", "betel nut",
         ],
     },
     "Peanuts": {

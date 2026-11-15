@@ -13,6 +13,9 @@ STEP2_SCRIPT = PROJECT_FOLDER / "02_DatasetCreation_AllergenSummary.py"
 
 
 def load_module(script_path, module_name):
+
+
+    "chestnut",
     """Load a numbered Python file without duplicating any of its business logic."""
     spec = importlib.util.spec_from_file_location(module_name, script_path)
     if spec is None or spec.loader is None:
