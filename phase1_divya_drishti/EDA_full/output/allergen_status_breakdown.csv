@@ -1,0 +1,33 @@
+﻿Allergen,Status,Count,Percentage,Total_Records
+Milk,Detected,58995,22.28,264748
+Milk,Review,238,0.09,264748
+Milk,Not Detected,205514,77.63,264748
+Milk,Unknown,1,0.0,264748
+Alpha-Gal,Detected,27681,10.46,264748
+Alpha-Gal,Review,163232,61.66,264748
+Alpha-Gal,Not Detected,73834,27.89,264748
+Alpha-Gal,Unknown,1,0.0,264748
+Soy,Detected,10754,4.06,264748
+Soy,Review,3290,1.24,264748
+Soy,Not Detected,250703,94.69,264748
+Soy,Unknown,1,0.0,264748
+Sesame,Detected,4662,1.76,264748
+Sesame,Review,0,0.0,264748
+Sesame,Not Detected,260085,98.24,264748
+Sesame,Unknown,1,0.0,264748
+Wheat,Detected,4341,1.64,264748
+Wheat,Review,58261,22.01,264748
+Wheat,Not Detected,202145,76.35,264748
+Wheat,Unknown,1,0.0,264748
+Tree Nuts,Detected,3248,1.23,264748
+Tree Nuts,Review,320,0.12,264748
+Tree Nuts,Not Detected,261179,98.65,264748
+Tree Nuts,Unknown,1,0.0,264748
+Eggs,Detected,838,0.32,264748
+Eggs,Review,9325,3.52,264748
+Eggs,Not Detected,254584,96.16,264748
+Eggs,Unknown,1,0.0,264748
+Peanuts,Detected,302,0.11,264748
+Peanuts,Review,0,0.0,264748
+Peanuts,Not Detected,264445,99.89,264748
+Peanuts,Unknown,1,0.0,264748

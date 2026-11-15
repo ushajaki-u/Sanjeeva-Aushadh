@@ -1,0 +1,13 @@
+# Full-dataset run: large inputs/outputs stay LOCAL (do not commit).
+# The master dataset (~784 MB) and the per-file shard CSVs (~741 MB) are
+# far over GitHub's 100 MB limit, and raw_data/ is ~10 GB of JSON/zip.
+raw_data/
+*.zip
+*.json
+
+# Ignore everything in output/ EXCEPT the small allergen-summary files
+# (the "third level" results worth sharing on GitHub).
+output/*
+!output/02_DatasetCreation_AllergenSummary_Output.csv
+!output/allergen_status_breakdown.csv
+!output/overall_allergen_summary.csv
