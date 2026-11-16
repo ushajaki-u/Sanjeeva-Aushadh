@@ -63,6 +63,15 @@ st.set_page_config(page_title="Divya Drishti", page_icon="💊", layout="wide")
 df = load_data()
 TOTAL = len(df)
 
+# Shared y-max for the route-signature chart, so its scale stays FIXED across allergens
+# (honest cross-allergen comparison, like the notebook's Chart 3 — not auto-rescaled per pick).
+_route_pcts = []
+for _rc in ROUTES.values():
+    _sub = df[df[_rc]]
+    if len(_sub):
+        _route_pcts.extend((_sub[f"{_s}_status"] == "Detected").mean() * 100 for _s in ALLERGENS.values())
+ROUTE_PCT_MAX = 1.15 * (max(_route_pcts) if _route_pcts else 100)
+
 # ---- Sidebar: the ONE interactive control (drives Part 2 only) ----
 st.sidebar.title("💊 Divya Drishti")
 st.sidebar.caption("Food allergens hidden in U.S. medications")
@@ -138,7 +147,8 @@ d1, d2 = st.columns(2)
 with d1:
     st.subheader("Route signature")
     st.caption("What % of each route's drugs carry this allergen. "
-               "(Only ~20% of meds have a route recorded in openFDA.)")
+               "(Only ~20% of meds have a route recorded in openFDA.) "
+               "The y-axis is fixed across allergens, so the bars stay comparable.")
     rr = []
     for rlabel, rcol in ROUTES.items():
         sub = df[df[rcol]]
@@ -150,7 +160,7 @@ with d1:
     rfig = px.bar(rdf, x="route", y="pct", text="pct", hover_data=["n drugs in route"],
                   labels={"pct": "% of route's drugs Detected", "route": ""})
     rfig.update_traces(texttemplate="%{text}%", marker_color=DETECTED)
-    rfig.update_layout(margin=dict(t=10, b=10))
+    rfig.update_layout(margin=dict(t=10, b=10), yaxis=dict(range=[0, ROUTE_PCT_MAX]))
     st.plotly_chart(rfig, use_container_width=True)
 with d2:
     st.subheader("Worst offenders")
