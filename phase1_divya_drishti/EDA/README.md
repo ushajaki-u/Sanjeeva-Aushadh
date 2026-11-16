@@ -89,4 +89,3 @@ streamlit run SA_DD_PH1_SIADS521_Assignment3_dashboard.py
 | `output/` | tagged dataset + allergen summaries |
 | `requirements.txt` | Python dependencies |
 
-*Repo: `ushajaki-u/Sanjeeva-Aushadh` · Data: openFDA Drug Label (public domain) · Benchmark: Reker et al., Sci Transl Med 2019.*
