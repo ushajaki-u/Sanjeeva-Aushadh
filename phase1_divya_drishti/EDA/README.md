@@ -59,8 +59,8 @@ Order matches the dashboard flow — scope, then explore one allergen, then the 
 | 3 | Route signature *(interactive)* | one allergen's spread across routes |
 | 4 | Worst offenders *(interactive)* | the exact ingredient words driving each allergen |
 | 5 | Sunburst ⭐ *(interactive)* | allergen → route → status *(new-to-course method)* |
-| 6 | Waffle ⭐ | how many allergens a single medication carries *(new-to-course method)* |
-| 7 | Why "Review"? *(interactive)* | the next-cleaning worklist |
+| 6 | Why "Review"? *(interactive)* | the next-cleaning worklist |
+| 7 | Waffle ⭐ | how many allergens a single medication carries *(new-to-course method, least critical — kept last)* |
 
 *The **heatmap** (allergen × route) is kept in the notebook as a 4th technique, but left out of the dashboard — the sunburst now covers route × allergen.*
 

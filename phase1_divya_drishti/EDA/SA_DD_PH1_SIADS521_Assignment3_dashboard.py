@@ -195,6 +195,20 @@ else:
 
 st.markdown("---")
 
+st.subheader('Why "Review"?')
+st.caption("The ambiguous words that pushed meds into Review for this allergen - our cleanup workload "
+           "(how much, and exactly which words, we still have to resolve).")
+rtv = top_terms(df, stem, "Review", topn)
+if rtv:
+    rvdf = pd.DataFrame(rtv, columns=["word", "meds"]).sort_values("meds")
+    rvfig = px.bar(rvdf, x="meds", y="word", orientation="h", text="meds")
+    rvfig.update_traces(marker_color=REVIEW)
+    rvfig.update_layout(yaxis_title="", xaxis_title="# meds in Review", margin=dict(t=10, b=10))
+    st.plotly_chart(rvfig, use_container_width=True)
+else:
+    st.success(f"No Review items for {allergen} - nothing ambiguous to clean up. ✅")
+
+st.markdown("---")
 st.subheader("How many allergens does one medication carry?")
 st.caption("Each square ≈ 1% of medications, colored by number of allergens Detected (of 8).")
 order = ["0 (none)", "1", "2", "3 or more"]
@@ -219,21 +233,6 @@ waf.update_layout(xaxis=dict(visible=False), yaxis=dict(visible=False, scaleanch
                   plot_bgcolor="white", height=430, margin=dict(t=10),
                   legend=dict(orientation="h", y=-0.08))
 st.plotly_chart(waf, use_container_width=True)
-
-st.markdown("---")
-
-st.subheader('Why "Review"?')
-st.caption("The ambiguous words that pushed meds into Review for this allergen - our cleanup workload "
-           "(how much, and exactly which words, we still have to resolve).")
-rtv = top_terms(df, stem, "Review", topn)
-if rtv:
-    rvdf = pd.DataFrame(rtv, columns=["word", "meds"]).sort_values("meds")
-    rvfig = px.bar(rvdf, x="meds", y="word", orientation="h", text="meds")
-    rvfig.update_traces(marker_color=REVIEW)
-    rvfig.update_layout(yaxis_title="", xaxis_title="# meds in Review", margin=dict(t=10, b=10))
-    st.plotly_chart(rvfig, use_container_width=True)
-else:
-    st.success(f"No Review items for {allergen} - nothing ambiguous to clean up. ✅")
 
 st.markdown("---")
 st.caption("⚠️ Educational prototype. A 'Detected' tag is not a safety guarantee; always verify the "
