@@ -37,7 +37,6 @@ STATUS_COLORS = {"Detected": "#c1121f", "Review": "#f3722c", "Not Detected": "#7
 DETECTED, REVIEW, MUTED = "#c1121f", "#f3722c", "#d9c9c0"
 WAFFLE_COLORS = {"0 (none)": "#7fb069", "1": "#f4a259", "2": "#e4572e", "3 or more": "#9b2226"}
 
-
 @st.cache_data
 def load_data():
     df = pd.read_csv(DATA, low_memory=False)
@@ -51,7 +50,6 @@ def load_data():
     df["_n_detected"] = sum((df[c] == "Detected").astype(int) for c in status_cols)
     return df
 
-
 def top_terms(df, stem, status, k):
     """How many medications contain each matched word, for one allergen + status."""
     counter = Counter()
@@ -59,7 +57,6 @@ def top_terms(df, stem, status, k):
         for term in {t.strip() for t in str(cell).split("|") if t.strip()}:
             counter[term] += 1
     return counter.most_common(k)
-
 
 # ---------------------------------------------------------------------------
 st.set_page_config(page_title="Divya Drishti", page_icon="💊", layout="wide")
@@ -117,31 +114,6 @@ with c2:
     bar.update_layout(yaxis_title="", margin=dict(t=10, b=10))
     st.plotly_chart(bar, use_container_width=True)
 
-st.subheader("How many allergens does one medication carry?")
-st.caption("Each square ≈ 1% of medications, colored by number of allergens Detected (of 8).")
-order = ["0 (none)", "1", "2", "3 or more"]
-bucket = df["_n_detected"].apply(
-    lambda n: order[0] if n == 0 else (order[1] if n == 1 else (order[2] if n == 2 else order[3])))
-counts = bucket.value_counts().reindex(order, fill_value=0)
-pct = counts / counts.sum() * 100
-base = np.floor(pct).astype(int)
-for i in np.argsort(-(pct - base).values)[: int(100 - base.sum())]:
-    base.iloc[i] += 1
-seq = [cat for cat in order for _ in range(int(base[cat]))]
-waf = go.Figure(go.Scatter(
-    x=[i % 10 for i in range(len(seq))], y=[i // 10 for i in range(len(seq))], mode="markers",
-    marker=dict(size=22, symbol="square", color=[WAFFLE_COLORS[c] for c in seq],
-                line=dict(width=2, color="white")),
-    text=seq, hoverinfo="text", showlegend=False))
-for cat in order:
-    waf.add_trace(go.Scatter(x=[None], y=[None], mode="markers",
-        marker=dict(size=12, symbol="square", color=WAFFLE_COLORS[cat]),
-        name=f"{cat}: {int(counts[cat]):,} meds ({pct[cat]:.1f}%)"))
-waf.update_layout(xaxis=dict(visible=False), yaxis=dict(visible=False, scaleanchor="x"),
-                  plot_bgcolor="white", height=430, margin=dict(t=10),
-                  legend=dict(orientation="h", y=-0.08))
-st.plotly_chart(waf, use_container_width=True)
-
 st.markdown("---")
 
 # ============================================================
@@ -193,26 +165,6 @@ with d2:
     else:
         st.info(f"No Detected ingredients for {allergen} in this shard.")
 
-st.subheader('Why "Review"?')
-st.caption("The ambiguous words that pushed meds into Review for this allergen - our cleanup workload "
-           "(how much, and exactly which words, we still have to resolve).")
-rtv = top_terms(df, stem, "Review", topn)
-if rtv:
-    rvdf = pd.DataFrame(rtv, columns=["word", "meds"]).sort_values("meds")
-    rvfig = px.bar(rvdf, x="meds", y="word", orientation="h", text="meds")
-    rvfig.update_traces(marker_color=REVIEW)
-    rvfig.update_layout(yaxis_title="", xaxis_title="# meds in Review", margin=dict(t=10, b=10))
-    st.plotly_chart(rvfig, use_container_width=True)
-else:
-    st.success(f"No Review items for {allergen} - nothing ambiguous to clean up. ✅")
-
-st.markdown("---")
-
-# ============================================================
-# PART 3 - ADDITIONAL VIEWS  (static, kept at the bottom)
-# ============================================================
-st.header("③ Additional views")
-
 st.subheader(f"☀️ Sunburst — {allergen} status across routes")
 st.caption("New-to-course method, driven by your sidebar allergen pick. "
            f"Center = {allergen}; middle ring = the 5 route buckets (sized by how many "
@@ -241,19 +193,47 @@ if sb_rows:
 else:
     st.info(f"No route-tagged {allergen} detections to chart.")
 
-st.subheader("Heatmap — allergen prevalence within each route")
-st.caption("Kept for completeness.")
-mat, ylabels = [], []
-for rlabel, rcol in ROUTES.items():
-    sub = df[df[rcol]]
-    if len(sub) == 0:
-        continue
-    mat.append([round((sub[f"{acol}_status"] == "Detected").mean() * 100, 1) for acol in ALLERGENS.values()])
-    ylabels.append(f"{rlabel} (n={len(sub)})")
-heat = px.imshow(mat, x=list(ALLERGENS.keys()), y=ylabels, text_auto=True, aspect="auto",
-                 color_continuous_scale="Reds", labels=dict(color="% Detected"))
-heat.update_layout(margin=dict(t=10, b=10))
-st.plotly_chart(heat, use_container_width=True)
+st.markdown("---")
+
+st.subheader("How many allergens does one medication carry?")
+st.caption("Each square ≈ 1% of medications, colored by number of allergens Detected (of 8).")
+order = ["0 (none)", "1", "2", "3 or more"]
+bucket = df["_n_detected"].apply(
+    lambda n: order[0] if n == 0 else (order[1] if n == 1 else (order[2] if n == 2 else order[3])))
+counts = bucket.value_counts().reindex(order, fill_value=0)
+pct = counts / counts.sum() * 100
+base = np.floor(pct).astype(int)
+for i in np.argsort(-(pct - base).values)[: int(100 - base.sum())]:
+    base.iloc[i] += 1
+seq = [cat for cat in order for _ in range(int(base[cat]))]
+waf = go.Figure(go.Scatter(
+    x=[i % 10 for i in range(len(seq))], y=[i // 10 for i in range(len(seq))], mode="markers",
+    marker=dict(size=22, symbol="square", color=[WAFFLE_COLORS[c] for c in seq],
+                line=dict(width=2, color="white")),
+    text=seq, hoverinfo="text", showlegend=False))
+for cat in order:
+    waf.add_trace(go.Scatter(x=[None], y=[None], mode="markers",
+        marker=dict(size=12, symbol="square", color=WAFFLE_COLORS[cat]),
+        name=f"{cat}: {int(counts[cat]):,} meds ({pct[cat]:.1f}%)"))
+waf.update_layout(xaxis=dict(visible=False), yaxis=dict(visible=False, scaleanchor="x"),
+                  plot_bgcolor="white", height=430, margin=dict(t=10),
+                  legend=dict(orientation="h", y=-0.08))
+st.plotly_chart(waf, use_container_width=True)
+
+st.markdown("---")
+
+st.subheader('Why "Review"?')
+st.caption("The ambiguous words that pushed meds into Review for this allergen - our cleanup workload "
+           "(how much, and exactly which words, we still have to resolve).")
+rtv = top_terms(df, stem, "Review", topn)
+if rtv:
+    rvdf = pd.DataFrame(rtv, columns=["word", "meds"]).sort_values("meds")
+    rvfig = px.bar(rvdf, x="meds", y="word", orientation="h", text="meds")
+    rvfig.update_traces(marker_color=REVIEW)
+    rvfig.update_layout(yaxis_title="", xaxis_title="# meds in Review", margin=dict(t=10, b=10))
+    st.plotly_chart(rvfig, use_container_width=True)
+else:
+    st.success(f"No Review items for {allergen} - nothing ambiguous to clean up. ✅")
 
 st.markdown("---")
 st.caption("⚠️ Educational prototype. A 'Detected' tag is not a safety guarantee; always verify the "
