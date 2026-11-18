@@ -35,25 +35,6 @@ The long-term vision consists of three complementary components:
 
 ---
 
-## Landscape & Prior Art
-
-Food allergens hidden in medication *inactive* ingredients is a real, under-served problem — real enough that others are already building for it. Rather than claim novelty, this project maps where it sits and where it differs:
-
-| Product | What it does | Relation to this work |
-|---|---|---|
-| [AllergenMaps / AllergenMeds](https://allergenmaps.org/) | A medication ingredient & allergen database (580K+ FDA-listed medications, ~4K fillers) that screens excipients against allergen/dietary/religious exclusions — a pharmacist screening tool plus a consumer app (**AllergenMeds**). | **Closest prior art** — same core idea (excipient-level allergen lookup), offered as a commercial product. |
-| [Hello Pharmacist](https://hellopharmacist.com/drug-supplement-interactions/) | A telehealth-pharmacy service with drug and drug–supplement interaction checking. | **Adjacent** — focuses on drug/supplement *interactions*, not food-allergen excipients. |
-
-**How Sanjeevini Aushad is different**
-
-- **Open, explainable, auditable** — rule-based tagging over public data, built in the open as applied-AI research, with every allergen flag traceable to the exact ingredient term (not a closed commercial black box).
-- **Integrative / AYUSH lens** — frames allergen-safe alternatives within an integrative-medicine perspective.
-- **A full decision-support arc, not a single lookup** — the vision spans *measurement* (Divya Drishti) → *pre-prescription conflict detection* (Lakshmana Rekha) → *allergen-safe therapeutic alternatives* (Sanjeevini).
-
-*A fuller competitive analysis will live in the PRD.*
-
----
-
 ## Current Status
 
 - ✅ Research and problem formulation complete
@@ -63,6 +44,23 @@ Food allergens hidden in medication *inactive* ingredients is a real, under-serv
   - 🔗 **Live dashboard (20K sample):** https://saddph1siads521.streamlit.app/
 - 🚧 Data engineering and implementation in progress
 - 🎯 Future work includes EHR integration and clinical validation
+
+---
+
+## Related Work & Differentiation
+
+Before building, I surveyed the space to confirm this is a real, under-served problem — and that the approach adds something genuinely new. A couple of efforts touch adjacent ground:
+
+- **[AllergenMaps / AllergenMeds](https://allergenmaps.org/)** — a medication-ingredient allergen database and consumer app.
+- **[Hello Pharmacist](https://hellopharmacist.com/drug-supplement-interactions/)** — drug and drug–supplement interaction checking.
+
+What makes **Sanjeevini Aushad** distinct:
+
+- **Open, explainable, auditable** — rule-based tagging over public data, with every allergen flag traceable to the exact ingredient term.
+- **Integrative / AYUSH lens** — frames allergen-safe alternatives within an integrative-medicine perspective.
+- **A full decision-support arc** — measurement (Divya Drishti) → pre-prescription conflict detection (Lakshmana Rekha) → allergen-safe alternatives (Sanjeevini), not a single lookup.
+
+*A fuller competitive analysis will live in the PRD.*
 
 ---
 
