@@ -26,10 +26,6 @@ patient's known allergies. Finding a compatible medication can take more than on
 patient ends up as the system integrator.
 
 <p align="center">
-  <img src="FAREConsumerJourney.png" width="640" alt="The food-allergy patient journey">
-</p>
-
-<p align="center">
   <img src="Medication Ingredient-Safety Journey (1).png" width="640" alt="The current medication ingredient-safety journey">
 </p>
 
