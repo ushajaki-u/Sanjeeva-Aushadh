@@ -42,6 +42,7 @@ The long-term vision consists of three complementary components:
 - ✅ Data acquisition complete
 - 🚧 **Divya Drishti (allergen EDA)** — 20,000-medication sample **complete**; scaling to the full openFDA set (all 14 shards, ~264K medications) **in progress** (cleanup of ambiguous *Review* cases ongoing)
   - 🔗 **Live dashboard (20K sample):** https://saddph1siads521.streamlit.app/
+  - Notebook: https://github.com/ushajaki-u/Sanjeeva-Aushadh/tree/main/phase1_divya_drishti/EDA
 - 🚧 Data engineering and implementation in progress
 - 🎯 Future work includes EHR integration and clinical validation
 
