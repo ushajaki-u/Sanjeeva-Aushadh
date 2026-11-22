@@ -4,7 +4,7 @@ SIADS 521 - interactive dashboard.
 
 The page tells the whole story, top to bottom:
   (1) Scope of the problem - STATIC overview (pie, bar-by-allergen, waffle)
-  (2) Explore by allergen  - INTERACTIVE: pick an allergen in the sidebar and the
+  (2) Explore by allergen  - INTERACTIVE: pick an allergen at the top of that section and the
       metrics, route signature, worst offenders and why-review all reconfigure.
   (3) Additional views     - sunburst (the new-to-course method, driven by the
       allergen pick) + a static heatmap, kept at the very bottom.
@@ -72,18 +72,12 @@ for _rc in ROUTES.values():
         _route_pcts.extend((_sub[f"{_s}_status"] == "Detected").mean() * 100 for _s in ALLERGENS.values())
 ROUTE_PCT_MAX = 1.15 * (max(_route_pcts) if _route_pcts else 100)
 
-# ---- Sidebar: the ONE interactive control (drives Part 2 only) ----
+# ---- Sidebar: branding + data source only (the interactive control now lives next to the charts) ----
 st.sidebar.title("💊 Divya Drishti")
 st.sidebar.caption("Food allergens hidden in U.S. medications")
-st.sidebar.markdown("### 🔎 Explore by allergen")
-allergen = st.sidebar.selectbox(
-    "Choose an allergen", list(ALLERGENS), index=0,
-    help="Drives the middle section: metrics, route, worst offenders, why-review.")
-topn = st.sidebar.radio("Worst-offenders: show top", [3, 5, 10], index=1, horizontal=True)
 st.sidebar.markdown("---")
 st.sidebar.caption("Data: openFDA Drug Label (public domain), one 20,000-med shard. "
                    "Educational prototype - not medical advice.")
-stem = ALLERGENS[allergen]
 
 st.title("💊 Sanjeevani Aushad")
 st.subheader("Phase 1 - Divya Drishti")
@@ -126,10 +120,20 @@ with c2:
 st.markdown("---")
 
 # ============================================================
-# PART 2 - EXPLORE BY ALLERGEN  (interactive - sidebar picker drives all of this)
+# PART 2 - EXPLORE BY ALLERGEN  (interactive - the in-section picker at the top drives all of this)
 # ============================================================
-st.header(f"② Explore by allergen — showing: {allergen}")
-st.caption("👈 Change the allergen in the sidebar; every chart in this section reconfigures.")
+st.header("② Explore by allergen")
+
+# ---- Interactive controls, placed right next to the charts they drive ----
+ctrl_left, ctrl_right = st.columns([3, 2])
+with ctrl_left:
+    allergen = st.selectbox(
+        "🔎 Choose an allergen", list(ALLERGENS), index=0,
+        help="Drives this whole section: metrics, route, worst offenders, why-review.")
+with ctrl_right:
+    topn = st.radio("Worst-offenders: show top", [3, 5, 10], index=1, horizontal=True)
+stem = ALLERGENS[allergen]
+st.caption(f"Showing **{allergen}** — change it above and every chart in this section reconfigures.")
 
 det = int((df[f"{stem}_status"] == "Detected").sum())
 rev = int((df[f"{stem}_status"] == "Review").sum())
@@ -176,11 +180,10 @@ with d2:
         st.info(f"No Detected ingredients for {allergen} in this shard.")
 
 st.subheader(f"☀️ Sunburst — {allergen} status across routes")
-st.caption("New-to-course method, driven by your sidebar allergen pick. "
+st.caption("New-to-course method, driven by your allergen pick above. "
            f"Center = {allergen}; middle ring = the 5 route buckets (sized by how many "
            "medications take that route); outer ring = all 4 statuses "
            "(Detected / Review / Not Detected / Unknown). "
-           "Click a wedge to drill in, click the center to zoom back out. "
            "A medication can take more than one route, so route counts overlap.")
 sb_rows = []
 for rlabel, rcol in ROUTES.items():
@@ -199,6 +202,7 @@ if sb_rows:
         hovertemplate="<b>%{label}</b><br>%{value} medications<br>%{percentParent} of parent<extra></extra>",
     )
     sun.update_layout(margin=dict(t=10, b=10, l=10, r=10), height=520)
+    st.info("👆 **Interactive** — click a wedge to drill in · click the center to zoom back out.")
     st.plotly_chart(sun, use_container_width=True)
 else:
     st.info(f"No route-tagged {allergen} detections to chart.")
