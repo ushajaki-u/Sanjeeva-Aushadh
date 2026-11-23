@@ -73,13 +73,16 @@ for _rc in ROUTES.values():
 ROUTE_PCT_MAX = 1.15 * (max(_route_pcts) if _route_pcts else 100)
 
 # ---- Sidebar: branding + data source only (the interactive control now lives next to the charts) ----
-st.sidebar.title("💊 Divya Drishti")
-st.sidebar.caption("Food allergens hidden in U.S. medications")
-st.sidebar.markdown("---")
-st.sidebar.caption("Data: openFDA Drug Label (public domain), one 20,000-med shard. "
-                   "Educational prototype - not medical advice.")
+#st.sidebar.title("💊 Divya Drishti")
+#st.sidebar.caption("Food allergens hidden in U.S. medications")
+#st.sidebar.markdown("---")
+#st.sidebar.caption("Data: openFDA Drug Label (public domain), one 20,000-med shard. "
+#                   "Educational prototype - not medical advice.")
 
 st.title("💊 Sanjeevani Aushad")
+st.title("Data: openFDA Drug Label (public domain), one 20,000-med shard. "
+                   "Educational prototype - not medical advice.")
+
 st.subheader("Phase 1 - Divya Drishti")
 st.caption("Food Allergens in U.S. Medications")
 
