@@ -1,0 +1,26 @@
+flowchart TD
+    A[Automation & Orchestration<br/>Scheduled refresh · Manual trigger] --> B
+
+    subgraph PIPELINE[Medication Allergen Intelligence Pipeline]
+      direction LR
+      B[Source Data<br/>OpenFDA · Preserve snapshots] --> C[Process & Classify<br/>Extract · Normalize · Detect]
+      C --> D{Validation & Quality Gate<br/>Automated tests · Evaluation · Review}
+      D -->|Pass| E[Publish<br/>Versioned validated dataset]
+      D -->|Fail / uncertain| H[Review & Investigate]
+      E --> F[Consume<br/>Streamlit · Medication information · Analytics]
+      F --> G[User Feedback<br/>Report issues · Flag concerns · Suggestions]
+      G --> H
+      H -. Potential correction / test / source investigation .-> C
+    end
+
+    O[System-wide Observability & Traceability<br/>Source freshness · Pipeline status · Quality metrics<br/>Change tracking · Audit trail · Version history · Governance]
+    B -.-> O
+    C -.-> O
+    D -.-> O
+    E -.-> O
+    F -.-> O
+
+    Z[Automate the refresh. Validate the results. Publish responsibly.]:::tag
+    F --> Z
+
+    classDef tag fill:#d8f1ef,stroke:#087e80,color:#073b42,font-weight:bold;
