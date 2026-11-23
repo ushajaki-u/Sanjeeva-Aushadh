@@ -43,8 +43,7 @@ through a traceable and continuously monitored workflow.
 This represents the long-term system vision. Components
 will evolve incrementally as the project develops.
 
-![Sanjeeva Aushadhi Long-Term System Vision](images/sanjeeva-aushadhi-system-vision.png)
-
+![Sanjeeva Aushadhi Long-Term System Vision](images/Sanjeeva%20Aushadhi%20System%20Vision.png)
 ---
 
 ## Current Status
