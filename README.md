@@ -33,6 +33,18 @@ The long-term vision consists of three complementary components:
 - **Lakshmana Rekha** – Detect potential medication-allergen conflicts before a prescription reaches the patient.
 - **Sanjeevini** – Recommend therapeutically equivalent, allergen-safe alternatives when available.
 
+  ## Long-Term System Vision
+
+Sanjeeva Aushadhi is envisioned as an automated medication
+allergen intelligence pipeline that retrieves, processes,
+validates, and publishes medication allergen information
+through a traceable and continuously monitored workflow.
+
+This represents the long-term system vision. Components
+will evolve incrementally as the project develops.
+
+![Sanjeeva Aushadhi Long-Term System Vision](images/sanjeeva-aushadhi-system-vision.png)
+
 ---
 
 ## Current Status
