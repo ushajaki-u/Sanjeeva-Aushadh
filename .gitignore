@@ -8,3 +8,8 @@ __pycache__/
 
 # Transient run logs
 phase1_divya_drishti/EDA/output/_run_log.txt
+
+# Editor / notebook backup files
+*.bak
+*.ns_bak
+.ipynb_checkpoints/
